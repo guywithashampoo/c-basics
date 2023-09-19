@@ -70,11 +70,22 @@ void multid_pointer()
     // printf("%d %d %d\n", p[0][0], p[1][2], p[2][3]);
 }
 
+void void_ptr()
+{
+    int a = 5;
+    float b = 9.5;
+    void *p = &a;
+    printf("%p\n", p);
+    p = &b;
+    printf("%p\n", p);
+}
+
 int main()
 {
     // format_specifier();
     // pointer_array();
     // multid_pointer();
+    void_ptr();
 
     return 0;
 }
