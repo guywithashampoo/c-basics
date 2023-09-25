@@ -27,5 +27,8 @@ int main()
     // C %= A is equivalent to C = C % A
     // C >>= 2 is same as C = C >> 2
     // C ^= 2 is same as C = C ^ 2
+
+    // C >>= 1 is same as C / 2
+    // C <<= 1 is same as C * 2
     return 0;
 }
