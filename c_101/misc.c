@@ -14,21 +14,21 @@ int main()
     // int n = (int)a / b;
     // printf("%d\n", n);
 
-    // int p1 = 150, p2;
-    // float f1 = 100.0, f2;
-    // f2 = p1 / f1; // int / float = float
-    // printf("%f\n", f2);
-    // p1 = 100;
-    // f1 = 150.0;
-    // p2 = f1 / p1; // float / int = float
-    // printf("%d\n", p2);
+    int p1 = 150, p2;
+    float f1 = 100.0, f2;
+    f2 = p1 / f1; // int / float = float
+    printf("%f\n", f2);
+    p1 = 100;
+    f1 = 150.0;
+    p2 = f1 / p1; // float / int = int
+    printf("%d\n", p2);
 
-    if (1 < 2)
-        printf("1<2\n");
-    if (2 > 3)
-        printf("2>3\n");
-    else // goes with the most recent if(2>3)
-        printf("2<3\n");
+    // if (1 < 2)
+    //     printf("1<2\n");
+    // if (2 > 3)
+    //     printf("2>3\n");
+    // else // goes with the most recent if(2>3)
+    //     printf("2<3\n");
 
     return 0;
 }
