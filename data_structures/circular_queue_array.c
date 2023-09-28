@@ -1,5 +1,3 @@
-// Circular Queue implementation in C
-
 #include <stdio.h>
 
 #define SIZE 5

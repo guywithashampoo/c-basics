@@ -20,7 +20,7 @@ typedef struct out
 
 int main()
 {
-    // Dynamic allocation in stack
+    // static allocation in stack
     in i = {5};
     in j = {6};
     out s = {&i, j};
@@ -31,7 +31,7 @@ int main()
     printf("%d\n", r->x->k);
     printf("%d\n", r->y.k);
 
-    // static allocation in heap, use stdlib for calloc, malloc
+    // dynamic allocation in heap, use stdlib for calloc, malloc
     in *l = (in *)malloc(sizeof(in));
     l->k = 20;
     out *m = (out *)malloc(sizeof(out));

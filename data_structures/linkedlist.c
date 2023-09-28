@@ -17,14 +17,13 @@ typedef struct list
 
 list *init_list()
 {
-    // list *l = (list *)malloc(sizeof(list));
-    // list *l;
-    // l->head = NULL;
+    list *l = (list *)malloc(sizeof(list));
+    l->head = NULL;
 
-    list l;
-    l.head = NULL;
-    list *l1 = &l;
-    return l1;
+    // list l;
+    // l.head = NULL;
+    // list *l1 = &l;
+    return l;
 }
 
 node *newnode(int val)
