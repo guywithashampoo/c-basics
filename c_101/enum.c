@@ -29,6 +29,7 @@ int main()
     enum months month5 = jul;
     enum months month6 = aug;
     printf("%d %d %d %d %d\n", month2, month3, month4, month5, month6);
+    //3 11 12 11 12
 
     return 0;
 }
