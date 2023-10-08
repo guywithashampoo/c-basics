@@ -11,7 +11,7 @@ typedef struct queue
 {
     node *head;
     node *tail;
-} list;
+} queue;
 
 node *newnode(int val)
 {
@@ -21,65 +21,53 @@ node *newnode(int val)
     return n;
 }
 
-list *initlist()
+queue *initqueue()
 {
-    list *l = (list *)malloc(sizeof(list));
-    l->head = NULL;
-    l->tail = NULL;
-    return l;
+    queue *q = (queue *)malloc(sizeof(queue));
+    q->head = NULL;
+    q->tail = NULL;
+    return q;
 }
 
-void enqueue(list *l, int val)
+void enqueue(queue *q, int val)
 {
     node *n = newnode(val);
-    if (l->head == NULL)
+    if (q->head == NULL)
     {
-        l->head = n;
-        l->tail = n;
+        q->head = n;
+        q->tail = n;
     }
     else
     {
-        node *p = l->head;
-        while (p->next != NULL)
-        {
-            p = p->next;
-        }
-        p->next = n;
-        l->tail = n;
+        q->tail->next = n;
+        q->tail = n;
     }
 }
 
-void dequeue(list *l)
+void dequeue(queue *q)
 {
-    if (l->head == NULL)
-    {
-        printf("queue empty\n");
-    }
-    else if (l->head == l->tail)
-    {
-        printf("dequeued %d\n", l->head->val);
-        free(l->head);
-        l->head = NULL;
-        l->tail = NULL;
-    }
-    else
-    {
-        printf("dequeued %d\n", l->head->val);
-        node *p = l->head->next;
-        free(l->head);
-        l->head = p;
-    }
-}
-
-void printqueue(list *l)
-{
-    if (l->head == NULL)
+    if (q->head == NULL)
     {
         printf("queue empty\n");
     }
     else
     {
-        node *p = l->head;
+        printf("dequeued %d\n", q->head->val);
+        node *p = q->head->next;
+        free(q->head);
+        q->head = p;
+    }
+}
+
+void printqueue(queue *q)
+{
+    if (q->head == NULL)
+    {
+        printf("queue empty\n");
+    }
+    else
+    {
+        node *p = q->head;
         printf("%d\n", p->val);
         while (p->next != NULL)
         {
@@ -91,13 +79,14 @@ void printqueue(list *l)
 
 int main()
 {
-    list *l1 = initlist();
-    enqueue(l1, 5);
-    enqueue(l1, 6);
-    enqueue(l1, 7);
-    enqueue(l1, 8);
-    enqueue(l1, 9);
-    dequeue(l1);
-    printqueue(l1);
+    queue *q1 = initqueue();
+    enqueue(q1, 5);
+    dequeue(q1);
+    printqueue(q1);
+    enqueue(q1, 6);
+    enqueue(q1, 7);
+    enqueue(q1, 8);
+    enqueue(q1, 9);
+    printqueue(q1);
     return 0;
 }
