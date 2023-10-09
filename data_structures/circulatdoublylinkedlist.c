@@ -5,6 +5,7 @@ typedef struct node
 {
     int val;
     struct node *next;
+    struct node *prev;
 } node;
 
 typedef struct list
@@ -15,8 +16,9 @@ typedef struct list
 node *newnode(int val)
 {
     node *n = (node *)malloc(sizeof(node));
-    n->val = val;
     n->next = NULL;
+    n->prev = NULL;
+    n->val = val;
     return n;
 }
 
@@ -27,13 +29,14 @@ list *initlist()
     return l;
 }
 
-void addlist(list *l, int val)
+void addnode(list *l, int val)
 {
     node *n = newnode(val);
     if (l->head == NULL)
     {
         l->head = n;
-        l->head->next = n;
+        n->next = l->head;
+        n->prev = l->head;
     }
     else
     {
@@ -43,30 +46,51 @@ void addlist(list *l, int val)
             p = p->next;
         }
         p->next = n;
+        n->prev = p;
+        l->head->prev = n;
         n->next = l->head;
     }
 }
 
-void deletelist(list *l)
+void deletenode(list *l, int val)
 {
     if (l->head == NULL)
     {
-        printf("empty list\n");
+        printf("list empty\n");
     }
     else if (l->head->next == l->head)
     {
-        free(l->head);
-        l->head = NULL;
+        if (l->head->val == val)
+        {
+            printf("%d deleted\n", l->head->val);
+            free(l->head);
+            l->head = NULL;
+        }
+        else
+        {
+            printf("element not found\n");
+        }
     }
     else
     {
         node *p = l->head;
-        while (p->next->next != l->head)
+        while ((p->next->next != l->head) && (p->next->val != val))
         {
             p = p->next;
         }
-        free(p->next);
-        p->next = l->head;
+        if (p->next->val == val)
+        {
+            printf("%d deleted\n", p->next->val);
+            node *k = p->next;
+            p->next = p->next->next;
+            p->next->prev = p;
+            free(k);
+            k = NULL;
+        }
+        else
+        {
+            printf("element not found\n");
+        }
     }
 }
 
@@ -74,28 +98,28 @@ void printlist(list *l)
 {
     if (l->head == NULL)
     {
-        printf("empty queue\n");
+        printf("list empty\n");
     }
     else
     {
         node *p = l->head;
-        while (p != l->head)
+        do
         {
             printf("%d\n", p->val);
             p = p->next;
-        }
+        } while (p != l->head);
     }
 }
 
 int main()
 {
     list *l1 = initlist();
-    addlist(l1, 3);
-    addlist(l1, 4);
-    addlist(l1, 5);
+    addnode(l1, 4);
+    addnode(l1, 5);
+    addnode(l1, 6);
+    addnode(l1, 7);
     printlist(l1);
-    deletelist(l1);
+    deletenode(l1, 7);
     printlist(l1);
-
     return 0;
 }

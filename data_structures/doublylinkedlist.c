@@ -31,7 +31,7 @@ list *initlist()
     return l;
 }
 
-void insertnodelast(list *l, int val)
+void insertNodeEnd(list *l, int val)
 {
     node *n = newnode(val);
     if (l->head == NULL)
@@ -47,7 +47,7 @@ void insertnodelast(list *l, int val)
     }
 }
 
-void insertnodebeginning(list *l, int val)
+void insertNodeStart(list *l, int val)
 {
     node *n = newnode(val);
     if (l->head == NULL)
@@ -63,11 +63,11 @@ void insertnodebeginning(list *l, int val)
     }
 }
 
-void insertatindex(list *l, int val, int i)
+void insertAtIndex(list *l, int val, int i)
 {
     if (i == 0)
     {
-        insertnodebeginning(l, val);
+        insertNodeStart(l, val);
         return;
     }
     node *n = newnode(val);
@@ -86,7 +86,7 @@ void insertatindex(list *l, int val, int i)
     }
     if (p == l->tail)
     {
-        insertnodelast(l, val);
+        insertNodeEnd(l, val);
         return;
     }
     n->next = p->next;
@@ -95,7 +95,7 @@ void insertatindex(list *l, int val, int i)
     p->next = n;
 }
 
-void deletelastnode(list *l)
+void deleteNodeLast(list *l)
 {
     if (l->head == NULL)
     {
@@ -116,7 +116,7 @@ void deletelastnode(list *l)
     }
 }
 
-void deletefirstnode(list *l)
+void deleteNodeStart(list *l)
 {
     if (l->head == NULL)
     {
@@ -137,11 +137,11 @@ void deletefirstnode(list *l)
     }
 }
 
-void deleteatindex(list *l, int i)
+void deleteAtIndex(list *l, int i)
 {
     if (i == 0)
     {
-        deletefirstnode(l);
+        deleteNodeStart(l);
         return;
     }
     node *p = l->head;
@@ -159,7 +159,7 @@ void deleteatindex(list *l, int i)
     }
     if (p == l->tail)
     {
-        deletelastnode(l);
+        deleteNodeLast(l);
         return;
     }
     p->prev->next = p->next;
@@ -188,19 +188,19 @@ void printlist(list *l)
 int main()
 {
     list *l1 = initlist();
-    insertnodebeginning(l1, 5);
-    insertnodebeginning(l1, 6);
-    insertnodebeginning(l1, 7);
+    insertNodeStart(l1, 5);
+    insertNodeStart(l1, 6);
+    insertNodeStart(l1, 7);
     printlist(l1);
-    insertnodelast(l1, 8);
+    insertNodeEnd(l1, 8);
     printlist(l1);
-    insertatindex(l1, 9, 2);
+    insertAtIndex(l1, 9, 2);
     printlist(l1);
-    deletefirstnode(l1);
+    deleteNodeStart(l1);
     printlist(l1);
-    deletelastnode(l1);
+    deleteNodeLast(l1);
     printlist(l1);
-    deleteatindex(l1, 2);
+    deleteAtIndex(l1, 2);
     printlist(l1);
     return 0;
 }

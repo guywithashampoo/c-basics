@@ -58,7 +58,7 @@ poly *addpoly(poly *p1, poly *p2)
     poly *p = initpoly();
     if (x != NULL && y != NULL)
     {
-        while (x == NULL || y == NULL)
+        while (x != NULL && y != NULL)
         {
             if (x->exp == y->exp)
             {
@@ -112,7 +112,7 @@ void printpoly(poly *p)
         while (k != NULL)
         {
             c = (k->coef >= 0) ? '+' : '-';
-            printf("%c%dx^%d", c, k->coef, k->exp);
+            printf("%c%dx^%d", c, abs(k->coef), k->exp);
             k = k->next;
         }
     }
@@ -124,7 +124,7 @@ void inputpoly(poly *p)
     int c = 0, e = 0;
     char ch = '+';
     char tmp;
-    printf("enter poly\n");
+    printf("enter polynomail\n");
     scanf("%d%c^%d%c", &c, &tmp, &e, &ch);
     addcoef(p, c, e);
     while (ch != 10)
@@ -146,12 +146,9 @@ int main()
 {
     poly *p1 = initpoly();
     inputpoly(p1);
-    printpoly(p1);
     poly *p2 = initpoly();
     inputpoly(p2);
-    printpoly(p2);
-    poly *p3 = initpoly();
-    p3 = addpoly(p1, p2);
+    poly *p3 = addpoly(p1, p2);
     printpoly(p3);
     return 0;
 }
