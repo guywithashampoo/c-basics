@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct node
 {
@@ -27,7 +28,87 @@ node *newnode(int val)
     return n;
 }
 
-void insertNodeEnd(list *l, int val)
+int countListElements(list *l)
+{
+    int count = 0;
+    node *n = l->head;
+    while (n != NULL)
+    {
+        n = n->next;
+        count++;
+    }
+    return count;
+}
+
+void swap(node *prev, node *a, node *b)
+{
+    if (prev == NULL)
+    {
+        a->next = b->next;
+        b->next = a;
+    }
+    else
+    {
+        prev->next = b;
+        a->next = b->next;
+        b->next = a;
+    }
+}
+
+void bubbleSort(list *l)
+{
+    int c = countListElements(l);
+    int k = c - 1;
+    bool swapped = false;
+    if (c == 0 || c == 1)
+    {
+        return;
+    }
+    else
+    {
+        for (int i = 1; i < c; i++)
+        {
+            node *prev = NULL;
+            printf("prev =  %d\n", (prev) ? prev->val : 0);
+            node *a = l->head;
+            printf("a =  %d\n", a->val);
+            node *b = l->head->next;
+            printf("b =  %d\n", b->val);
+            for (int j = 0; j < k; j++)
+            {
+                if ((a->val > b->val) && (j == 0))
+                {
+                    l->head = b;
+                    swap(prev, a, b);
+                    swapped = true;
+                }
+                else if ((a->val > b->val) && (j != 0))
+                {
+                    swap(prev, a, b);
+                    swapped = true;
+                }
+                else
+                {
+                    swapped = false;
+                }
+                if (swapped)
+                {
+                    prev = b;
+                    b = a->next;
+                }
+                else
+                {
+                    prev = a;
+                    a = a->next;
+                    b = b->next;
+                }
+            }
+            k--;
+        }
+    }
+}
+
+void insertnode(list *l, int val)
 {
     node *n = newnode(val);
     if (l->head == NULL)
@@ -42,20 +123,6 @@ void insertNodeEnd(list *l, int val)
             p = p->next;
         }
         p->next = n;
-    }
-}
-
-void insertNodeStart(list *l, int val)
-{
-    node *n = newnode(val);
-    if (l->head == NULL)
-    {
-        l->head = n;
-    }
-    else
-    {
-        n->next = l->head;
-        l->head = n;
     }
 }
 
@@ -88,7 +155,7 @@ void insertAfterIndex(list *l, int val, int i)
     }
 }
 
-void deleteNodeEnd(list *l)
+void deletenode(list *l)
 {
     if (l->head == NULL)
     {
@@ -110,26 +177,6 @@ void deleteNodeEnd(list *l)
         printf("deleted %d\n", p->next->val);
         free(p->next);
         p->next = NULL;
-    }
-}
-
-void deleteNodeStart(list *l)
-{
-    if (l->head == NULL)
-    {
-        printf("list empty\n");
-    }
-    else if (l->head->next == NULL)
-    {
-        printf("deleted %d\n", l->head->val);
-        free(l->head);
-        l->head = NULL;
-    }
-    else
-    {
-        node *p = l->head->next;
-        free(l->head);
-        l->head = p;
     }
 }
 
@@ -186,18 +233,16 @@ int main()
 {
     list *l1 = initlist();
 
-    insertNodeEnd(l1, 3);
-    insertNodeEnd(l1, 4);
-    insertNodeEnd(l1, 5);
-    insertNodeEnd(l1, 6);
-    insertNodeEnd(l1, 7);
+    insertnode(l1, 7);
+    insertnode(l1, 3);
+    insertnode(l1, 6);
+    // insertnode(l1, 5);
+    // insertnode(l1, 4);
     printLinkedlist(l1);
-    insertAfterIndex(l1, 10, 2);
+    bubbleSort(l1);
     printLinkedlist(l1);
-    deleteIndex(l1, 3);
-    printLinkedlist(l1);
-    deleteNodeEnd(l1);
-    printLinkedlist(l1);
-    deleteNodeStart(l1);
-    printLinkedlist(l1);
+    // insertAfterIndex(l1, 10, 2);
+    // printLinkedlist(l1);
+    // deleteIndex(l1, 3);
+    // printLinkedlist(l1);
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct node
 {
@@ -180,6 +181,26 @@ void printLinkedlist(list *l)
             n = n->next;
         } while (n != NULL);
     }
+}
+
+bool floydsAlgorithm(list *l)
+{
+    if (l->head == NULL || l->head == NULL)
+    {
+        return false;
+    }
+    node *slow = l->head;
+    node *fast = l->head;
+    do
+    {
+        slow = slow->next;
+        fast = (fast->next) ? (fast->next->next) ? fast->next->next : NULL : NULL;
+        if (slow == fast)
+        {
+            return true;
+        }
+    } while (fast != NULL);
+    return false;
 }
 
 int main()

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct node
 {
@@ -27,7 +28,7 @@ node *newnode(int val)
     return n;
 }
 
-void insertNodeEnd(list *l, int val)
+void insertnode(list *l, int val)
 {
     node *n = newnode(val);
     if (l->head == NULL)
@@ -42,20 +43,6 @@ void insertNodeEnd(list *l, int val)
             p = p->next;
         }
         p->next = n;
-    }
-}
-
-void insertNodeStart(list *l, int val)
-{
-    node *n = newnode(val);
-    if (l->head == NULL)
-    {
-        l->head = n;
-    }
-    else
-    {
-        n->next = l->head;
-        l->head = n;
     }
 }
 
@@ -88,7 +75,7 @@ void insertAfterIndex(list *l, int val, int i)
     }
 }
 
-void deleteNodeEnd(list *l)
+void deletenode(list *l)
 {
     if (l->head == NULL)
     {
@@ -110,26 +97,6 @@ void deleteNodeEnd(list *l)
         printf("deleted %d\n", p->next->val);
         free(p->next);
         p->next = NULL;
-    }
-}
-
-void deleteNodeStart(list *l)
-{
-    if (l->head == NULL)
-    {
-        printf("list empty\n");
-    }
-    else if (l->head->next == NULL)
-    {
-        printf("deleted %d\n", l->head->val);
-        free(l->head);
-        l->head = NULL;
-    }
-    else
-    {
-        node *p = l->head->next;
-        free(l->head);
-        l->head = p;
     }
 }
 
@@ -182,22 +149,60 @@ void printLinkedlist(list *l)
     }
 }
 
+bool linearSearch(list *l, int i)
+{
+    node *n = l->head;
+    if (n == NULL)
+    {
+        return false;
+    }
+    else
+    {
+        do
+        {
+            if (n->val == i)
+            {
+                return true;
+            }
+            n = n->next;
+        } while (n != NULL);
+        insertnode(l, i);
+        return false;
+    }
+}
+
+void checkloop(list *l)
+{
+    list *l2 = initlist();
+    node *n = l->head;
+    while (n != NULL)
+    {
+        if (linearSearch(l2, n->val))
+        {
+            printf("loop exists");
+            return;
+        }
+        else
+        {
+            insertnode(l2, n->val);
+        }
+    }
+}
+
 int main()
 {
     list *l1 = initlist();
 
-    insertNodeEnd(l1, 3);
-    insertNodeEnd(l1, 4);
-    insertNodeEnd(l1, 5);
-    insertNodeEnd(l1, 6);
-    insertNodeEnd(l1, 7);
+    insertnode(l1, 3);
+    insertnode(l1, 4);
+    insertnode(l1, 5);
+    insertnode(l1, 6);
+    insertnode(l1, 7);
     printLinkedlist(l1);
     insertAfterIndex(l1, 10, 2);
     printLinkedlist(l1);
     deleteIndex(l1, 3);
     printLinkedlist(l1);
-    deleteNodeEnd(l1);
-    printLinkedlist(l1);
-    deleteNodeStart(l1);
-    printLinkedlist(l1);
+
+    checkloop(l1);
 }

@@ -30,10 +30,14 @@ int main()
     // else // goes with the most recent if(2>3)
     //     printf("2<3\n");
 
-    char c;
-    int x;
-    scanf("%c", &c);
-    printf("%d", c);
+    // char c;
+    // int x;
+    // scanf("%c", &c);
+    // printf("%d", c);
+
+    int x = 5;
+    int y = (int)&x;
+    printf("%d\n", y);
 
     return 0;
 }

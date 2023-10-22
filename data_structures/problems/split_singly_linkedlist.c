@@ -182,6 +182,36 @@ void printLinkedlist(list *l)
     }
 }
 
+int countListElements(list *l)
+{
+    int count = 0;
+    node *n = l->head;
+    while (n != NULL)
+    {
+        n = n->next;
+        count++;
+    }
+    return count;
+}
+
+void frontBackSplit(list *l, list *l1, list *l2)
+{
+    int count = countListElements(l);
+    int mid = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+    node *n = l->head;
+    while (mid != 0)
+    {
+        insertNodeEnd(l1, n->val);
+        n = n->next;
+        mid--;
+    }
+    while (n != NULL)
+    {
+        insertNodeEnd(l2, n->val);
+        n = n->next;
+    }
+}
+
 int main()
 {
     list *l1 = initlist();
@@ -196,8 +226,15 @@ int main()
     printLinkedlist(l1);
     deleteIndex(l1, 3);
     printLinkedlist(l1);
-    deleteNodeEnd(l1);
-    printLinkedlist(l1);
-    deleteNodeStart(l1);
-    printLinkedlist(l1);
+    // deleteNodeEnd(l1);
+    // printLinkedlist(l1);
+    // deleteNodeStart(l1);
+    // printLinkedlist(l1);
+
+    list *l2 = initlist();
+    list *l3 = initlist();
+
+    frontBackSplit(l1, l2, l3);
+    printLinkedlist(l2);
+    printLinkedlist(l3);
 }
